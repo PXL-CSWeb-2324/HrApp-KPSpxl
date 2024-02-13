@@ -29,7 +29,33 @@ namespace HrApp.Controllers
         {
             return View();
         }
-
+        [HttpPost]
+        public async Task<IActionResult> LoginUserNameAsync(LoginUserNameViewModel login)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByNameAsync(login.UserName);
+                if (user == null)
+                {
+                    ModelState.AddModelError("", "User is niet gevonden!");
+                }
+                else
+                {
+                    var pwd = login.Password;
+                    var result = await _signInManager.PasswordSignInAsync(user, pwd, false, false);
+                    if(result.Succeeded)
+                    {
+                        return RedirectToAction("Index", "Home");   
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Wachtwoord is foutief!");
+                    }
+                }
+               
+            }
+            return View();
+        }
         //TODO
 
         #endregion

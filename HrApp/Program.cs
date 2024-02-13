@@ -12,7 +12,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>();
-
+//8chars
+//1numeric
+//1capital
+//1nonalpha
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
